@@ -2,16 +2,6 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-bool all_distinct(vector<int> a) {
-    for (int i = 0; i < a.size(); i++) {
-        for (int j = i + 1; j < a.size(); j++) {
-            if (a[i] == a[j]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
 int main(void) {
     int T; 
     cin >> T;
