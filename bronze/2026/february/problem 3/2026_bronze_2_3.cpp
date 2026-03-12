@@ -1,35 +1,42 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<utility>
 using namespace std;
 int main() {
     int T;
     cin >> T;
-    for (int i = 0; i < T; i++) {
+    vector<vector<int>> movements;
+    vector<int> answers;
+    for (int k = 0; k < T; k++) {
         int N;
         int M;
         cin >> N >> M;
-        int ans = 0;
         string favorite;
         cin >> favorite;
-        vector<string> s(N);
-        for (int j = 0; j < N; j++) {
-            cin >> s[j];
-        }
-        vector<vector<int>> perform;
-        for (int j = 0; j < M; j++) {
-            for (int k = j + 1; k < M; k++) {
-                if (favorite[j] = s[1][k] && favorite[k] = s[1][j] && favorite[j] != favorite[k]) {
-                    ans++;
-                    perform.push_back([2, 1, j, k]);
-                    swap(s[1][j], s[1][k]);
-                }
+        int ans;
+        vector<pair<int, int>> indexes[26];
+        string first;
+        cin >> first;
+        for (int i = 1; i < N; i++) {
+            string a;
+            cin >> a;
+            for (int j = 0; j < M; j++) {
+                indexes[a[j] - 'a'].push_back(make_pair(i, j));
             }
         }
-        for (int j = 0; j < M; j++) {
+        for (int i = 0; i < M; i++) {
+            if (first[i] == favorite[i]) {
+                continue;
+            }
+            for (int j = i + 1; j < M; j++) {
+                if (first[j] == first[i]) {
+                    ans++;
+                    movements.push_back({1, 1, i, j});
+                }
+            }
             
         }
     }
     return 0;
-    // comment
 }
