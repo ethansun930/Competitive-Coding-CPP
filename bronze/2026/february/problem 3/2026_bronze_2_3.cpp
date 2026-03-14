@@ -16,13 +16,13 @@ int main() {
         string favorite;
         cin >> favorite;
         int ans;
-        unordered_set<pair<int, int>> indexes[26];
         string first;
         cin >> first;
         unordered_set<int> first_indexes[26];
         for (int i = 0; i < M; i++) {
             first_indexes[first[i] - 'a'].push_back(i);
         }
+        unordered_set<pair<int, int>> indexes[26];
         for (int i = 1; i < N; i++) {
             string a;
             cin >> a;
@@ -42,10 +42,18 @@ int main() {
                 first_indexes[first[i] - 'a'].erase(i);
                 first_indexes[first[i] - 'a'].insert(val);
                 ans++;
-                ansers[k].push_back([1, 1, i, val]);
+                answers[k].push_back([1, 1, i, val]);
                 continue;
             }
-            auto a = first_indexes[favorit]
+            auto a = indexes[favorite[i] - 'a'].begin()
+            auto val = *a;
+            if (val.second() == i) {
+                first_indexes[first[i] - 'a'].erase(i);
+                indexes[favorite[i] - 'a'].erase(val);
+                indexes[first[i] - 'a'].insert(val);
+                ans++;
+
+            }
         }
     }
     return 0;
