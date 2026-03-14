@@ -20,7 +20,7 @@ int main() {
         cin >> first;
         unordered_set<int> first_indexes[26];
         for (int i = 0; i < M; i++) {
-            first_indexes[first[i] - 'a'].push_back(i);
+            first_indexes[first[i] - 'a'].insert(i);
         }
         unordered_set<pair<int, int>> indexes[26];
         vector<string> s;
