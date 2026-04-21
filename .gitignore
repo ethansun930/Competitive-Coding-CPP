@@ -42,3 +42,17 @@
 
 # debug information files
 *.dwo
+
+# 先忽略所有文件
+*
+
+# 但不要忽略文件夹，不然进不到子目录
+!*/
+
+# 保留所有 .cpp 文件（包括任意子目录下的）
+!*.cpp
+
+# 保留 .gitignore 自己
+!.gitignore
+
+*.json

@@ -27,7 +27,7 @@ int main() {
         for (int i = 1; i < N; i++) {
             string a;
             cin >> a;
-            s.push_back(a)
+            s.push_back(a);
             for (int j = 0; j < M; j++) {
                 indexes[a[j] - 'a'].push_back(make_pair(i, j));
             }
