@@ -23,7 +23,7 @@ struct DSU {
     void merge(int i, int j) {
         int rooti = find(i);
         int rootj = find(j);
-        if (root i != rootj) {
+        if (rooti != rootj) {
             parent[rooti] = rootj;
         }
     }
