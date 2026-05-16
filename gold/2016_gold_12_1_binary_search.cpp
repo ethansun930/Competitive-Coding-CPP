@@ -14,7 +14,7 @@ struct DSU {
         }
     }
     int find(int i) {
-        if (parent[i] = i) {
+        if (parent[i] == i) {
             return i;
         }
         parent[i] = find(parent[i]);
@@ -30,10 +30,54 @@ struct DSU {
     bool complete() {
         int count = 0;
         for (int i = 0; i < length; i++) {
-            if (parent[i] = i) {
+            if (parent[i] == i) {
                 count++;
+                if (count > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+bool works(long long power, vector<pair<int, int>>& coordinates) {
+    DSU dsu = DSU(coordinates.size());
+    for (int i = 0; i < coordinates.size(); i++) {
+        int xi = coordinates[i].first;
+        int yi = coordinates[i].second;
+        for (int j = i + 1; j < coordinates.size(); j++) {
+            int xj = coordinates[j].first;
+            int yj = coordinates[j].second;
+            if (((xi - xj) * (xi - xj) + (yi - yj) * (yi - yj)) <= power) {
+                dsu.merge(i, j);
             }
         }
     }
-};
-int main() {}
+    return dsu.complete();
+}
+int main() {
+    freopen("moocast.in", "r", stdin);
+    freopen("moocast.out", "w", stdout);
+    int N;
+    cin >> N;
+    vector<pair<int, int>> coordinates(N);
+    for (int i = 0; i < N; i++) {
+        cin >> coordinates[i].first >> coordinates[i].second;
+    }
+    long long left = 0;
+    long long right = 1 << 30;
+    while (left < right) {
+        long long middle = (left + right) / 2;
+        if (works(middle, coordinates)) {
+            right = middle;
+            // cout << "left, right, middle, right was changed" << left << ' '
+            // << right << ' ' << middle << '\n';
+        } else {
+            left = middle + 1;
+            // cout << "left, right, middle, left was changed" << left << ' ' <<
+            // right << ' ' << middle << '\n';
+        }
+    }
+    cout << right << '\n';
+    return 0;
+}
