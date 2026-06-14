@@ -12,6 +12,5 @@ int main(void)
 	int b = nums[1];
 	int c = nums[6] - a - b;
 	cout << a << " " << b << " " << c << "\n";
-
 	return 0;
 }
