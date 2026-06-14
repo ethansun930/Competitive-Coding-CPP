@@ -19,6 +19,10 @@ void dfs(int node, int parent, vector<vector<int>>& adj, vector<bool>& matched,
 int main() {
     int n;
     cin >> n;
+    if (n == 1) {
+        cout << 0 << '\n';
+        return 0;
+    }
     vector<vector<int>> adj(n);
     for (int i = 0; i < n - 1; i++) {
         int a, b;
@@ -30,7 +34,7 @@ int main() {
     }
     int ans = 0;
     vector<bool> matched(n, false);
-    dfs(1, 0, adj, matched, ans);
+    dfs(0, -1, adj, matched, ans);
     cout << ans << '\n';
     return 0;
 }
