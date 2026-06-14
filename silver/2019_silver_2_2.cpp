@@ -1,11 +1,11 @@
 #include<iostream>
-// #include<cstdio>
+#include<cstdio>
 using namespace std;
 static int change[1002][1002];
 static int values[1001][1001];
 int main() {
-    // freopen("paintbarn.in", "r", stdin);
-    // freopen("paintbarn.out", "w", stdout);
+    freopen("paintbarn.in", "r", stdin);
+    freopen("paintbarn.out", "w", stdout);
     int N, K;
     cin >> N >> K;
     for (int i = 0; i < 1002; i++) {

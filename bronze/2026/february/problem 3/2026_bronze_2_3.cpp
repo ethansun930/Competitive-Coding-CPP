@@ -22,14 +22,14 @@ int main() {
         for (int i = 0; i < M; i++) {
             first_indexes[first[i] - 'a'].insert(i);
         }
-        unordered_set<pair<int, int>> indexes[26];
+        unordered_set<int> indexes[26];
         vector<string> s;
         for (int i = 1; i < N; i++) {
             string a;
             cin >> a;
             s.push_back(a);
             for (int j = 0; j < M; j++) {
-                indexes[a[j] - 'a'].push_back(make_pair(i, j));
+                indexes[a[j] - 'a'].push_back(i * M + j);
             }
         }
         for (int i = 0; i < M; i++) {
@@ -47,28 +47,33 @@ int main() {
                 movements[k].push_back([1, 1, i, val]);
                 continue;
             }
-            auto a = indexes[favorite[i] - 'a'].begin()
-            auto val = *a;
-            if (val.second() == i) {
+            auto a = indexes[favorite[i] - 'a'].begin();
+            int val = *a;
+            int first = val / M;
+            int second = val % M;
+            if (second == i) {
                 first_indexes[first[i] - 'a'].erase(i);
                 indexes[favorite[i] - 'a'].erase(val);
                 indexes[first[i] - 'a'].insert(val);
-                swap(first[i], s[val.first()][i]);
+                swap(first[i], s[first][i]);
                 ans++;
-                movements[k].push_back([2, 1, val.first(), i]);
+                vector<int> new = [2, 1, first, i];
+                movements[k].push_back(new);
                 continue;
             }
             indexes[favorite[i] - 'a'].erase(val);
             indexes[s[val.first()][i] - 'a'].insert(val);
-            indexes[s[val.first()][i] - 'a'].erase(make_pair(val.first(), i));
-            indexes[first[i] - 'a'].insert(make_pair(val.first(), i));
+            indexes[s[val.first()][i] - 'a'].erase(first * M + i);
+            indexes[first[i] - 'a'].insert(make_pair(first * M + i);
             first_indexes[first[i] - 'a'].erase(i);
             first_indexes[favorite[i] - 'a'].insert(i);
             swap(s[val.first()][i], s[val.first()][val.second()]);
             swap(first[i], s[val.first()][i]);
             ans += 2;
-            movements[k].push_back([1, val.first(), i, val.second()]);
-            movements[k].push_back([2, 1, val.first(), i]);
+            vector<int> new = [1, first, i, second];
+            movements[k].push_back([new]);
+            new = [2, 1, first, i];
+            movements[k].push_back(new);
         }
         answers.push_back(ans);
     }
