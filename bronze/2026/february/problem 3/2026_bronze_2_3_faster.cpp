@@ -1,4 +1,5 @@
-// this code was written by chatgpt, f
+// this code was written by chatgpt, for me to look at and read to see if i
+// could improve the 2026_bronze_2_3_new.cpp.
 #include <array>
 #include <iostream>
 #include <set>

@@ -1,3 +1,5 @@
+// this is the improvement on 2026_bronze_2_3_new.cpp after reading chatgpt's
+// code.
 #include <iostream>
 #include <set>
 #include <string>
