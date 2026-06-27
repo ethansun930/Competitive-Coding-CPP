@@ -28,6 +28,7 @@ int main() {
                 answers[input] = y;
             } else if (answers[input] != y) {
                 ok = false;
+                break;
             }
         }
         if (!ok) {
@@ -41,13 +42,22 @@ int main() {
             bool ok_0 = true;
             bool ok_1 = true;
             for (int i = 0; i < (1 << N); i++) {
+                if (!ok_0 && !ok_1) {
+                    break;
+                }
                 if ((answers[i] != -1) && ((i & (1 << curr_row)) == 0)) {
+                    if (!ok_0) {
+                        continue;
+                    }
                     if (val_0 == -1) {
                         val_0 = answers[i];
                     } else if (val_0 != answers[i]) {
                         ok_0 = false;
                     }
                 } else {
+                    if (!ok_1) {
+                        continue;
+                    }
                     if (val_1 == -1) {
                         val_1 = answers[i];
                     } else if (val_1 != answers[i]) {
@@ -78,6 +88,7 @@ int main() {
         for (int i = 0; i < (1 << N); i++) {
             if (answers[i] != -1) {
                 ok = false;
+                break;
             }
         }
         if (ok) {
