@@ -45,7 +45,10 @@ int main() {
                 if (!ok_0 && !ok_1) {
                     break;
                 }
-                if ((answers[i] != -1) && ((i & (1 << curr_row)) == 0)) {
+                if (answers[i] != -1) {
+                    continue;
+                }
+                if ((i & (1 << curr_row)) == 0) {
                     if (!ok_0) {
                         continue;
                     }
