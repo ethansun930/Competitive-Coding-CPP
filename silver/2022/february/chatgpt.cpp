@@ -1,3 +1,4 @@
+// this was written by chatgpt for 2022 silver february problem 2.
 #include <algorithm>
 #include <array>
 #include <iostream>
