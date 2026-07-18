@@ -5,6 +5,7 @@
 using namespace std;
 
 int main() {
+    ios::sync_with_stdio(false);
     cin.tie(NULL);
     int T;
     cin >> T;
@@ -20,7 +21,7 @@ int main() {
             cin >> y;
             int input = 0;
             for (int i = 0; i < N; i++) {
-                if (x[i] == '1') {
+                if (x[N - i - 1] == '1') {
                     input += (1 << i);
                 }
             }
@@ -45,7 +46,7 @@ int main() {
                 if (!ok_0 && !ok_1) {
                     break;
                 }
-                if (answers[i] != -1) {
+                if (answers[i] == -1) {
                     continue;
                 }
                 if ((i & (1 << curr_row)) == 0) {
@@ -69,16 +70,24 @@ int main() {
                 }
             }
             if (ok_0) {
+                ok_0 = false;
                 for (int i = 0; i < (1 << N); i++) {
-                    if ((answers[i] != -1) && ((i & (1 << curr_row)) == 0)) {
-                        answers[i] = -1;
+                    if ((i & (1 << curr_row)) == 0) {
+                        if (answers[i] != -1) {
+                            ok_0 = true;
+                            answers[i] = -1;
+                        }
                     }
                 }
             }
             if (ok_1) {
+                ok_1 = false;
                 for (int i = 0; i < (1 << N); i++) {
-                    if ((answers[i] != -1) && ((i & (1 << curr_row)) == 1)) {
-                        answers[i] = -1;
+                    if ((i & (1 << curr_row)) != 0) {
+                        if (answers[i] != -1) {
+                            ok_1 = true;
+                            answers[i] = -1;
+                        }
                     }
                 }
             }
@@ -87,17 +96,21 @@ int main() {
             } else {
                 curr_row++;
             }
-        }
-        for (int i = 0; i < (1 << N); i++) {
-            if (answers[i] != -1) {
-                ok = false;
+            ok = true;
+            for (int i = 0; i < (1 << N); i++) {
+                if (answers[i] != -1) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) {
                 break;
             }
         }
-        if (ok) {
-            cout << "OK" << '\n';
-        } else {
+        if (curr_row == N) {
             cout << "LIE" << '\n';
+        } else {
+            cout << "OK" << '\n';
         }
     }
     return 0;
