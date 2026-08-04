@@ -12,7 +12,16 @@ void solve() {
         cout << 0 << '\n';
         return;
     }
+    A = result;
+    B = B % cb;
     long long a_needed = f - result - 1;
+    long long b_needed = cb - B - 1;
+    if (ca > cb) {
+        cout << a_needed + b_needed + 1 << '\n';
+    } else {
+        cout << a_needed % ca + (a_needed / ca) * cb + b_needed + 1 << '\n';
+        return;
+    }
 }
 int main() {
     ios_base::sync_with_stdio(false);
