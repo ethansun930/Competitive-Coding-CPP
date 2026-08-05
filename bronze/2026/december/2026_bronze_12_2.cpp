@@ -1,3 +1,5 @@
+// https://usaco.org/index.php?page=viewproblem2&cpid=1540
+
 #include <iostream>
 #include <string>
 #include <vector>
