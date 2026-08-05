@@ -1,3 +1,5 @@
+// https://usaco.org/index.php?page=viewproblem2&cpid=1539
+
 #include <algorithm>
 #include <climits>
 #include <iostream>
