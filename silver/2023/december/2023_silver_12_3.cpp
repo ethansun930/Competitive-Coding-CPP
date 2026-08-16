@@ -1,14 +1,18 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
+#include <unordered_set>
 #include <vector>
 using namespace std;
 
 int main() {
     int T, C;
     cin >> T >> C;
-    vector<int> t(T);
+    unordered_set<int> t(T);
     for (int i = 0; i < T; i++) {
-        cin >> t[i];
+        int x;
+        cin >> x;
+        t.insert(x);
     }
     string S;
     cin >> S;
