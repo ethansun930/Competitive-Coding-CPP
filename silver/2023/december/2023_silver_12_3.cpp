@@ -70,9 +70,8 @@ int main() {
                 score++;
             }
         }
-        cout << i << ' ' << score << '\n';
         ans = max(ans, score);
-        new_com = (com[i] + 2) % 3 - 1;
+        new_com = (new_com + 2) % 3 - 1;
         d = new_com - com[i];
         score = hit_targets[d + 2];
         if (new_com == 0) {
@@ -81,7 +80,6 @@ int main() {
                 score++;
             }
         }
-        cout << i << ' ' << score << '\n';
         ans = max(ans, score);
         if (com[i] == 0) {
             if (pos[i] >= 0 && pos[i] <= 2 * C && t[pos[i]] &&
