@@ -5,11 +5,8 @@
 using namespace std;
 
 void DFS(vector<vector<int>>& adj, vector<int>& collects,
-         vector<int>& leaf_counts, unordered_set<int>& p, int node,
-         int parent) {
+         vector<int>& leaf_counts, vector<int>& p, int node, int parent) {
     if (node != 0 && adj[node].size() == 1) {
-        leaf_counts[node]++;
-    } else if (node == 0 && adj[node].size() == 0) {
         leaf_counts[node]++;
     }
     for (const int& i : adj[node]) {
@@ -19,9 +16,7 @@ void DFS(vector<vector<int>>& adj, vector<int>& collects,
             leaf_counts[node] += leaf_counts[i];
         }
     }
-    if (p.find(node) != p.end()) {
-        collects[node]++;
-    }
+    collects[node] += p[node];
     collects[node] = min(collects[node], leaf_counts[node]);
 }
 int main() {
@@ -41,18 +36,23 @@ int main() {
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
+    if (N == 1) {
+        cout << 1 << '\n';
+        return 0;
+    }
     int min_travels = 0;
-    for (int i = 0; i < N; i++) {
+    for (int i = 1; i < N; i++) {
         if (adj[i].size() == 1) {
             min_travels++;
         }
     }
     vector<int> collects(N, 0);
     vector<int> leaf_counts(N, 0);
-    unordered_set<int> new_p;
+    vector<int> new_p(N, 0);
     for (int i = 0; i < min_travels; i++) {
-        new_p.insert(p[i]);
+        new_p[p[i]]++;
     }
     DFS(adj, collects, leaf_counts, new_p, 0, -1);
     cout << collects[0] << '\n';
+    return 0;
 }
