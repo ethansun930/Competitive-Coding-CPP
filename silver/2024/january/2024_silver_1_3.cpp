@@ -49,6 +49,9 @@ int main() {
         if (i != possibles.size() - 1 && possibles[i] == possibles[i + 1]) {
             continue;
         }
+        if (possibles[i] > maxl) {
+            continue;
+        }
         unordered_set<long long> rems;
         for (long long j = 0; j < N; j++) {
             rems.insert(a[j] % possibles[i]);
