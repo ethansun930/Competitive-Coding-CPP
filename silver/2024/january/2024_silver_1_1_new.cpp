@@ -30,7 +30,6 @@ void solve() {
     for (int i = 0; i < Q; i++) {
         int h = pairs[i].first;
         int a = -pairs[i].second;
-        cout << a << ' ' << h << '\n';
         if (p[a] != p[h - 1]) {
             cout << -1 << '\n';
             return;
