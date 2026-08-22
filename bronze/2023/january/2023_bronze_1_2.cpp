@@ -32,8 +32,8 @@ int main() {
         cin >> s >> t >> c;
         s--;
         t--;
-        for (int i = s; i < t; i++) {
-            cooling[i] = c;
+        for (int j = s; j <= t; j++) {
+            cooling[j] = c;
         }
     }
     vector<conditioner> conditions(M);
