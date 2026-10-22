@@ -18,7 +18,7 @@ int main() {
     for (int i = 1; i <= N; i++) {
         string s;
         cin >> s;
-        for (int j = 0; j < N; j++) {
+        for (int j = N - 1; j >= 0; j--) {
             C[i] <<= 1;
             if (s[j] == '1') {
                 C[i] += 1;

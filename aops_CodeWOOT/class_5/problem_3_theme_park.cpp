@@ -1,7 +1,6 @@
 #include<iostream>
 #include<vector>
 #include<utility>
-#include<algorithm>
 using namespace std;
 
 int main() {
@@ -26,40 +25,52 @@ int main() {
         adj[b].push_back({a, p});
     }
     vector<int> next_s(N, 0);
-    vector<vector<int>> dp(1441, vector<int>(N + 1, -1));
-    dp[0][0] = 0;
+    vector<vector<vector<bool>>> dp(1441, vector<vector<bool>>(N + 1, vector<bool>(1 << N, false)));
+    dp[0][0][0] = true;
     for (int i = 0; i < 721; i++) {
-        if (dp[i][0] != -1) {
-            dp[i + 1][0] = max(dp[i + 1][0], dp[i][0]);
-            for (pair<int, int> j : adj[0]) {
-                dp[i + j.second][j.first] = max(dp[i + j.second][j.first], dp[i][0]);
+        for (int j = 0; j < (1 << N); j++) {
+            if (!dp[i][0][j]) {
+                continue;
+            }
+            dp[i + 1][0][j] = true;
+            for (pair<int, int> k : adj[0]) {
+                dp[i + k.second][k.first][j] = true;
             }
         }
         for (int j = 1; j <= N; j++) {
             if (next_s[j - 1] < S[j - 1] && t[j - 1][next_s[j - 1]] == i) {
                 next_s[j - 1]++;
-                if (dp[i][j] == -1) {
+                for (int k = 0; k < (1 << N); k++) {
+                    if ((k & (1 << (j - 1))) != 0) {
+                        continue;
+                    }
+                    if (!dp[i][j][k]) {
+                        continue;
+                    }
+                    dp[i + X[j - 1]][j][k | (1 << (j - 1))] = true;
+                }
+            }
+            for (int k = 0; k < (1 << N); k++) {
+                if (!dp[i][j][k]) {
                     continue;
                 }
-                dp[i + X[j - 1]][j] = max(dp[i + X[j - 1]][j], dp[i][j] + 1);
-            }
-            if (dp[i][j] == -1) {
-                continue;
-            }
-            dp[i + 1][j] = max(dp[i][j], dp[i + 1][j]);
-            for (pair<int, int> k : adj[j]) {
-                dp[i + k.second][k.first] = max(dp[i + k.second][k.first], dp[i][j]);
+                dp[i + 1][j][k] = true;
+                for (pair<int, int> l : adj[j]) {
+                    dp[i + l.second][l.first][k] = true;
+                }
             }
         }
     }
-    int ans = dp[0][0];
-    int index = 0;
-    for (int i = 1; i < 721; i++) {
-        if (dp[i][0] > ans) {
-            ans = dp[i][0];
-            index = i;
+    int ans = 0;
+    int time = 0;
+    for (int j = 0; j < 721; j++) {
+        for (int k = 0; k < (1 << N); k++) {
+            if (dp[j][0][k] && __builtin_popcount(k) > ans) {
+                ans = __builtin_popcount(k);
+                time = j;
+            }
         }
     }
-    cout << ans << ' ' << index << '\n';
+    cout << ans << ' ' << time << '\n';
     return 0;
 }
