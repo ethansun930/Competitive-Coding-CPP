@@ -28,6 +28,11 @@ int main() {
             subsets.push_back(i);
         }
     }
-    vector<double> dp(subsets.size());
-    
+    vector<double> dp(subsets.size(), 0);
+    int sub_count = subsets.size();
+    for (int i = 0; i < sub_count; i++) {
+        for (int j = 0; j < s; j++) {
+            
+        }
+    }
 }
