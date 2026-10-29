@@ -3,15 +3,21 @@
 #include<utility>
 using namespace std;
 
-void DFS(int node, vector<int>& dp, vector<vector<int>>& children, vector<int>& cost) {
-    int ans = 0;
+void DFS(int node, vector<long long>& dp, vector<vector<int>>& children, vector<long long>& cost, long long& answer) {
+    long long ans = 0;
+    long long second = 0;
     for (int child : children[node]) {
-        DFS(child, dp, children, cost);
-        if (dp[child] + cost[child] > ans) {
+        DFS(child, dp, children, cost, answer);
+        if (dp[child] + cost[child] >= ans) {
+            second = ans;
             ans = dp[child] + cost[child];
+        }
+        else if (dp[child] + cost[child] > second) {
+            second = dp[child] + cost[child];
         }
     }
     dp[node] = ans;
+    answer = max(answer, ans + second);
 }
 int main() {
     ios_base::sync_with_stdio(false);
@@ -28,24 +34,14 @@ int main() {
             p--;
             children[p].push_back(i);
         }
-        vector<int> cost(N, 0);
+        vector<long long> cost(N, 0);
         for (int i = 1; i < N; i++) {
             cin >> cost[i];
         }
-        vector<int> dp(N);
-        int m = 0;
-        int s = 0;
-        for (int i : children[0]) {
-            DFS(i, dp, children, cost);
-            if (dp[i] + cost[i] >= m) {
-                s = m;
-                m = dp[i] + cost[i];
-            }
-            else if (dp[i] + cost[i] > s) {
-                s = dp[i] + cost[i];
-            }
-        }
-        cout << m + s << '\n';
+        vector<long long> dp(N);
+        long long answer = 0;
+        DFS(0, dp, children, cost, answer);
+        cout << answer << '\n';
     }
     return 0;
 }

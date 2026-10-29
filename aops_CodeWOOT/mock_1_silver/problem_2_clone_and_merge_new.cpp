@@ -3,6 +3,8 @@
 #include<queue>
 #include<cmath>
 #include<unordered_set>
+#include<algorithm>
+#include<climits>
 using namespace std;
 
 int binary_bound(int n) {
@@ -25,14 +27,14 @@ struct vector_hash {
         return hash;
     }
 };
-int calculate(int N) {
+int calculate(int N, vector<int>& dp) {
     int bound = binary_bound(N);
     if ((N & (N - 1)) == 0) {
         return bound;
     }
     for (int j = 2; j <= sqrt(N); j++) {
         if (N % j == 0) {
-            bound = min(bound, calculate(j) + calculate(N/j));
+            bound = min(bound, dp[j] + dp[N/j]);
         }
     }
     unordered_set<vector<int>, vector_hash> seen;
@@ -68,7 +70,7 @@ int calculate(int N) {
                     new_v[j] = node.first[j];
                 }
                 new_v[i] = node.first[i] + node.first[i + 1];
-                for (int j = i + 1; j < size; j++) {
+                for (int j = i + 2; j < size; j++) {
                     new_v[j - 1] = node.first[j];
                 }
                 if (seen.find(new_v) == seen.end()) {
@@ -106,6 +108,13 @@ int calculate(int N) {
 int main() {
     int N;
     cin >> N;
-    cout << calculate(N) << '\n';
+    vector<int> dp(N + 1, INT_MAX);
+    for (int i = 1; i <= N; i++) {
+        if (N%i != 0) {
+            continue;
+        }
+        dp[i] = calculate(i, dp);
+    }
+    cout << dp[N] << '\n';
     return 0;
 }
