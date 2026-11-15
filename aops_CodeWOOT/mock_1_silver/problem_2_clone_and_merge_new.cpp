@@ -18,6 +18,10 @@ int binary_bound(int n) {
     }
     return ans;
 }
+struct State {
+    vector<int> vec;
+    int moves, sum;
+};
 struct vector_hash {
     int operator() (const vector<int>& vec) const {
         int hash = 31;
@@ -38,23 +42,17 @@ int calculate(int N, vector<int>& dp) {
         }
     }
     unordered_set<vector<int>, vector_hash> seen;
-    queue<pair<vector<int>, int>> q;
-    q.push({{2, 1}, 3});
+    queue<State> q;
+    q.push({{2, 1}, 3, 3});
     while (!q.empty()) {
-        pair<vector<int>, int> node = q.front();
+        State node = q.front();
         q.pop();
-        int sum = 0;
-        int size = node.first.size();
-        for (int i = 0; i < size; i++) {
-            sum += node.first[i];
-            if (sum > N) {
-                break;
-            }
-        }
+        int sum = node.sum;
+        int size = node.vec.size();
         if (sum > N) {
             continue;
         }
-        int min_moves = node.second + node.first.size() - 1;
+        int min_moves = node.moves + size - 1;
         if (sum == N) {
             bound = min(bound, min_moves);
             continue;
@@ -63,40 +61,40 @@ int calculate(int N, vector<int>& dp) {
         if (moves_left < 0 || sum * (1 << (moves_left/2)) < N) {
             continue;
         }
-        if (node.first.size() > 2) {
+        if (size > 2) {
             for (int i = 0; i < size - 1; i++) {
                 vector<int> new_v(size - 1);
                 for (int j = 0; j < i; j++) {
-                    new_v[j] = node.first[j];
+                    new_v[j] = node.vec[j];
                 }
-                new_v[i] = node.first[i] + node.first[i + 1];
+                new_v[i] = node.vec[i] + node.vec[i + 1];
                 for (int j = i + 2; j < size; j++) {
-                    new_v[j - 1] = node.first[j];
+                    new_v[j - 1] = node.vec[j];
                 }
                 if (seen.find(new_v) == seen.end()) {
                     reverse(new_v.begin(), new_v.end());
                     if (seen.find(new_v) == seen.end()) {
                         seen.insert(new_v);
-                        q.push({new_v, node.second + 1});
+                        q.push({new_v, node.moves + 1, sum});
                     }
                 }
             }
         }
         if (moves_left > 0) {
             for (int i = 0; i < size; i++) {
-                if ((sum + node.first[i]) * (1 << (moves_left - 2)/2) >= N) {
+                if ((sum + node.vec[i]) * (1 << (moves_left - 2)/2) >= N) {
                     vector<int> new_v(size + 1);
                     for (int j = 0; j <= i; j++) {
-                        new_v[j] = node.first[j];
+                        new_v[j] = node.vec[j];
                     }
                     for (int j = i; j < size; j++) {
-                        new_v[j + 1] = node.first[j];
+                        new_v[j + 1] = node.vec[j];
                     }
                     if (seen.find(new_v) == seen.end()) {
                         reverse(new_v.begin(), new_v.end());
                         if (seen.find(new_v) == seen.end()) {
                             seen.insert(new_v);
-                            q.push({new_v, node.second + 1});
+                            q.push({new_v, node.moves + 1, sum + node.vec[i]});
                         }
                     }
                 }
