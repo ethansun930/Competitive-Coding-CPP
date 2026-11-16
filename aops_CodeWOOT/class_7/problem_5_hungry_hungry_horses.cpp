@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-
+                
 int main() {
     int N;
     cin >> N;
@@ -62,14 +62,3 @@ int main() {
     }
     return 0;
 }
-/*
-h = 4
-maximum = 0
-node = 0
-curr = 1
-comp = 4
-       5
-   5       4
- 5   3   4   0
-0 5 3 1 4 0 0 0
-*/
