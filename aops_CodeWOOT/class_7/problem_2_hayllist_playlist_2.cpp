@@ -26,11 +26,12 @@ int main() {
         char t;
         int x, y;
         cin >> t >> x >> y;
+        x--;
         y--;
         if (t == 'C') {
-            tree[x + pN].set(S[x - 1], false);
+            tree[x + pN].set(S[x], false);
             tree[x + pN].set(y);
-            S[x - 1] = y;
+            S[x] = y;
             x += pN;
             x /= 2;
             while (x > 0) {
